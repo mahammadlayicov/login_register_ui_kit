@@ -58,17 +58,10 @@ class AuthService {
   }
 
   Future<User?> signInWithGoogle() async {
-    // Oturum açma sürecini başlat
     final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
-
-    // Süreç içerisinden bilgileri al
     final GoogleSignInAuthentication gAuth = await gUser!.authentication;
-
-    // Kullanıcı nesnesi oluştur
     final credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken, idToken: gAuth.idToken);
-
-    // Kullanıcı girişini sağla
     final UserCredential userCredential =
         await firebaseAuth.signInWithCredential(credential);
     log(userCredential.user!.email.toString());

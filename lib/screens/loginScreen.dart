@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:login_register_ui/constant/colors.dart';
 import 'package:login_register_ui/screens/forgetPasswordScreen.dart';
+import 'package:login_register_ui/screens/passwordChangeScreen.dart';
 import 'package:login_register_ui/screens/registerScreen.dart';
+import 'package:login_register_ui/screens/loginTrueScreen.dart';
+import 'package:login_register_ui/services/auth_service.dart';
 import 'package:login_register_ui/widget/backArrowWidget.dart';
 import 'package:login_register_ui/widget/buttonWidget.dart';
 import 'package:login_register_ui/widget/socialMediaButtonWidget.dart';
@@ -21,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
     // Implement some initialization operations here.
   }
 
+  final _emailT = TextEditingController();
+  final _passwordT = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -51,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 25,
           ),
           textFieldWidget(
+            textEditingController: _emailT,
             width: width,
             title: "Enter your email",
           ),
@@ -58,6 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 20,
           ),
           textFieldWidget(
+            obscureText: true,
+            textEditingController: _passwordT,
             width: width,
             title: "Enter your password",
             iconData: Icons.remove_red_eye_outlined,
@@ -78,7 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Container(
               margin: EdgeInsets.symmetric(horizontal: (width - 331) / 2),
-              child: button(textValue: "Login")),
+              child: GestureDetector(
+                  onTap: () => AuthService().singIn(context,
+                      email: _emailT.text, password: _passwordT.text),
+                  child: button(textValue: "Login"))),
           SizedBox(
             height: 25,
           ),
@@ -119,8 +130,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 socialMediaButtonWidget(
                   iconName: "lib/assets/facebook_ic.png",
                 ),
-                socialMediaButtonWidget(
-                  iconName: "lib/assets/google_ic.png",
+                InkWell(
+                  onTap: () async {
+                    AuthService().signInWithGoogle().then((value) =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => SecondScreen(),
+                            settings: RouteSettings(arguments: value))));
+                  },
+                  child: socialMediaButtonWidget(
+                    iconName: "lib/assets/google_ic.png",
+                  ),
                 ),
                 socialMediaButtonWidget(
                   iconName: "lib/assets/apple_ic.png",

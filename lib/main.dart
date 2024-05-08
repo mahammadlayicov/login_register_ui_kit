@@ -1,13 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:login_register_ui/screens/createNewPassword.dart';
-import 'package:login_register_ui/screens/forgetPasswordScreen.dart';
 import 'package:login_register_ui/screens/homeScreen.dart';
-import 'package:login_register_ui/screens/loginScreen.dart';
-import 'package:login_register_ui/screens/otpScreen.dart';
-import 'package:login_register_ui/screens/passwordChangeScreen.dart';
-import 'package:login_register_ui/screens/registerScreen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MainApp());
 }
 

@@ -4,8 +4,15 @@ import 'package:login_register_ui/constant/colors.dart';
 class textFieldWidget extends StatelessWidget {
   String title;
   IconData? iconData;
+  bool? obscureText;
+  TextEditingController? textEditingController;
   textFieldWidget(
-      {super.key, required this.width, required this.title, this.iconData});
+      {super.key,
+      this.textEditingController,
+      required this.width,
+      required this.title,
+      this.obscureText,
+      this.iconData});
   final double width;
 
   @override
@@ -27,10 +34,13 @@ class textFieldWidget extends StatelessWidget {
           Container(
             width: 260,
             child: TextField(
+              controller: textEditingController,
               textAlignVertical: TextAlignVertical.center,
-              obscureText: false,
-              decoration:
-                  InputDecoration(border: InputBorder.none, hintText: title),
+              obscureText: obscureText ?? false,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: title,
+              ),
             ),
           ),
           if (iconData != null)

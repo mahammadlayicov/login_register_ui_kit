@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_register_ui/constant/colors.dart';
 import 'package:login_register_ui/screens/loginScreen.dart';
+import 'package:login_register_ui/services/auth_service.dart';
 import 'package:login_register_ui/widget/backArrowWidget.dart';
 import 'package:login_register_ui/widget/buttonWidget.dart';
 import 'package:login_register_ui/widget/socialMediaButtonWidget.dart';
@@ -19,6 +20,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
     // Implement some initialization operations here.
   }
+
+  final _usernameT = TextEditingController();
+  final _emailT = TextEditingController();
+  final _passwordT = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: 25,
           ),
           textFieldWidget(
+            textEditingController: _usernameT,
             width: width,
             title: "Username",
           ),
@@ -57,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: 20,
           ),
           textFieldWidget(
+            textEditingController: _emailT,
             width: width,
             title: "Email",
           ),
@@ -64,6 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: 20,
           ),
           textFieldWidget(
+            obscureText: true,
+            textEditingController: _passwordT,
             width: width,
             title: "Password",
           ),
@@ -71,6 +80,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             height: 20,
           ),
           textFieldWidget(
+            obscureText: true,
             width: width,
             title: "Confirm Password",
           ),
@@ -79,7 +89,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Container(
               margin: EdgeInsets.symmetric(horizontal: (width - 331) / 2),
-              child: button(textValue: "Register")),
+              child: GestureDetector(
+                  onTap: () => AuthService().singUp(
+                      name: _usernameT.text,
+                      email: _emailT.text,
+                      password: _passwordT.text),
+                  child: button(textValue: "Register"))),
           SizedBox(
             height: 25,
           ),

@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Center(
               child: Text(
-                'Arka plana hoş geldiniz!',
+                '',
                 style: TextStyle(
                   fontSize: 24,
                   color: Colors.white,
